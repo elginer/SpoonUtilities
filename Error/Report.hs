@@ -40,6 +40,8 @@ import Text.Pretty
 
 import Data.List
 
+import Text.Parsec
+
 -- | A nice looking error
 data Error =
      -- | Error text
@@ -63,6 +65,9 @@ class ErrorReport err where
 -- Strings can be turned to errors
 instance ErrorReport String where
    report = new_error 
+
+instance ErrorReport ParseError where
+   report pe = error_lines (lines $ show pe) empty_error
 
 -- | Combine multiple errors into one report
 error_join :: [Error] -> Error

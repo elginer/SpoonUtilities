@@ -76,16 +76,30 @@ test_all_abstract :: String -- ^ The name of the testing process
                   -> (String -> (FilePath -> String -> a) -> Bool -> FilePath -> IO ()) -- ^ The tester
                   -> IO () -- ^ Run the test
 test_all_abstract process t test =
-   catch (success >> failure >> putStrLn "\n******AUTOMATIC TESTING PASSED******") 
-         (\e -> print (e :: SomeException) >> error "\n******TESTING FAILED!******")
+   catch (do
+      success >> failure
+      putStrLn "\n******AUTOMATIC TESTING PASSED******") 
+         (\e -> do
+      print (e :: SomeException)
+      error "\n******TESTING FAILED!******")
    where
    test_dir n = joinPath ["tests", process, n]
+   success_files :: IO [FilePath]
    success_files = test_files $ test_dir "success"
+   failure_files :: IO [FilePath]
    failure_files = test_files $ test_dir "failure"
    success = success_files >>= run_tests True
    failure = failure_files >>= run_tests False
-   run_tests b = mapM (test process t b)
-   test_files dir = fmap (map (combine dir) . filter (not . elem '.')) $ getDirectoryContents dir
+   run_tests b =
+      mapM (test process t b)
+   test_files :: FilePath -> IO [FilePath]
+   test_files dir = do
+      putStrLn $ "\nIn directory: " ++ dir
+      conts <- getDirectoryContents dir
+      putStrLn $ "Found files: " ++ show conts
+      let chosen = map (combine dir) $ filter (\f -> not $ head f == '.') conts
+      putStrLn $ "Choosing files: " ++ show chosen
+      return chosen
 
 -- | Test a source file.  
 test :: (ErrorReport a, Show b)
