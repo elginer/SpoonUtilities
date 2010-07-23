@@ -1,0 +1,19 @@
+Name:           SpoonsUtilities
+Version:	0.0.1
+Cabal-Version:  >= 1.2
+License:	GPL-3
+License-File:   COPYING	
+Author:		John Morrice
+Category:	Testing
+Synopsis:       Spoon's utilities.  Simple testing and nice looking error reporting.
+Build-type:	Simple
+
+Library
+   Build-Depends: base>=4, directory, filepath 
+   Exposed-modules:
+      Error.Report
+      Test.Simple
+      Text.Pretty
+
+Executable test
+   Main-is: tests/test.hs

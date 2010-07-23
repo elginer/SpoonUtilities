@@ -1,0 +1,13 @@
+Spoon's utilities.
+
+Copyright John Morrice 2010
+
+Contact John Morrice at spoon@killersmurf.com
+
+Spoon's utlities provide a simple testing and nice looking error reports.
+
+Note:  The automated tests are a little confusing to read since they test a tester.  If the *last* line is:
+
+******AUTOMATIC TESTING PASSED******
+
+Then all is well.
