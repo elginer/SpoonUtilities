@@ -45,3 +45,30 @@ pspace i = (('\n' : replicate (i * 3) ' ') ++)
 -- | Pretty print!
 pretty :: Pretty p => p -> String
 pretty p = pretty' p (-1) ""
+
+-- | Pretty print a list, putting two newlines between each element. (Paragraph layout)
+pretty_list_nl' :: Pretty p => [p] -> Int -> ShowS
+pretty_list_nl' ps i = foldr jn id (map (flip pretty' i) first_pretties) . last_pretty
+   where
+   (first_pretties, last_pretty) =
+      case ps of
+         (p:[]) -> ([], pretty' p i)
+         (p:rs) -> (take (length ps - 1) ps, pretty' (last ps) i)
+         _      -> ([], id)
+   jn g h = g . nl . nl . h
+
+-- | Pretty print a list, putting spaces between each element.
+pretty_list_sp' :: Pretty p => [p] -> Int -> ShowS
+pretty_list_sp' ps i = foldr jn id (map (flip pretty' i) ps)
+   where
+   jn g h = g . (' ' :) . h
+
+
+
+-- | Pretty print a list
+pretty_list' :: Pretty p => [p] -> Int -> ShowS
+pretty_list' ps i = foldr (.) id (map (flip pretty' i) ps)
+
+
+nl :: ShowS
+nl = ('\n' :)

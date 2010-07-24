@@ -34,6 +34,8 @@ import System.Directory
 
 import Control.Exception
 
+import Control.Monad
+
 -- | Test all source files in a stage of the testing process.
 test_all :: (ErrorReport a, Show b)
          => String -- ^ The name of the testing process
@@ -97,7 +99,7 @@ test_all_abstract process t test =
       putStrLn $ "\nIn directory: " ++ dir
       conts <- getDirectoryContents dir
       putStrLn $ "Found files: " ++ show conts
-      let chosen = map (combine dir) $ filter (\f -> not $ head f == '.') conts
+      chosen <- filterM doesFileExist $ map (combine dir) $ filter (\f -> not $ head f == '.') conts
       putStrLn $ "Choosing files: " ++ show chosen
       return chosen
 
