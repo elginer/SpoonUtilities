@@ -21,6 +21,7 @@ This file is part of Spoon's Utilities.
 {-# OPTIONS
     -XExistentialQuantification
     -XTypeSynonymInstances
+    -XDeriveDataTypeable
 #-}
 -- | Nice looking errors.
 module Error.Report
@@ -40,7 +41,11 @@ import Text.Pretty
 
 import Data.List
 
+import Data.Typeable
+
 import Text.Parsec
+
+import Control.Exception.Extensible
 
 -- | A nice looking error
 data Error =
@@ -48,6 +53,12 @@ data Error =
      forall p . Pretty p => PrettyError p
    | ErrorMessage [Error]
    | NoRaise [Error]
+   deriving (Typeable)
+
+instance Show Error where
+   show = pretty
+
+instance Exception Error
 
 instance Pretty Error where
    pretty' ce i =

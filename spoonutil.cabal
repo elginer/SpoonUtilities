@@ -9,7 +9,7 @@ Synopsis:       Spoon's utilities.  Simple testing and nice looking error report
 Build-type:	Simple
 
 Library
-   Build-Depends: base>=4, directory, filepath, parsec>=3 
+   Build-Depends: base>=4, directory, filepath, parsec>=3, extensible-exceptions 
    Exposed-modules:
       Error.Report
       Test.Simple
