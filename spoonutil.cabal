@@ -4,13 +4,16 @@ Cabal-Version:  >= 1.2
 License:	GPL-3
 License-File:   COPYING	
 Author:		John Morrice
+Maintainer:	John Morrice
 Category:	Testing
 Synopsis:       Spoon's utilities.  Simple testing and nice looking error reporting.
+Description:    Spoon's utilities.  Simple testing and nice looking error reporting.
 Build-type:	Simple
 Homepage:	http://github.com/elginer/SpoonUtilities
+Cabal-version:	>= 1.4
 
 Library
-   Build-Depends: base>=4, directory, filepath, parsec>=3, extensible-exceptions 
+   Build-Depends: base>=4 && < 4, directory, filepath, parsec>=3, extensible-exceptions 
    Exposed-modules:
       Error.Report
       Test.Simple
