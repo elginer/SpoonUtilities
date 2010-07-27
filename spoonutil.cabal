@@ -7,6 +7,7 @@ Author:		John Morrice
 Category:	Testing
 Synopsis:       Spoon's utilities.  Simple testing and nice looking error reporting.
 Build-type:	Simple
+Homepage:	http://github.com/elginer/SpoonUtilities
 
 Library
    Build-Depends: base>=4, directory, filepath, parsec>=3, extensible-exceptions 
